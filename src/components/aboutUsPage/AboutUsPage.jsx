@@ -10,10 +10,12 @@ const AboutUsPage = () => {
       </h1>
       <div className="flex gap-12">
         <div
-          className="flex justify-center rounded-full bg-orange-200 shadow-2xl border w-[120rem] overflow-hidden"
+          className="flex justify-center rounded-full shadow-2xl border w-[120rem] overflow-hidden"
           style={{
+            backgroundColor: "#ffd045",
             boxShadow:
               "rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset",
+            backgroundImage: "linear-gradient(315deg, #ff9945 0%, #dd7835 64%)",
           }}
         >
           <Image src={Picture} alt="" height={90} width={390} />
