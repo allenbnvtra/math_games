@@ -10,19 +10,7 @@ const GamesPage = () => {
         </h1>
 
         <div className="px-10 flex flex-wrap justify-center gap-3">
-          <GameCards />
-          <GameCards />
-          <GameCards />
-          <GameCards />
-          <GameCards />
-          <GameCards />
-          <GameCards />
-          <GameCards />
-          <GameCards />
-          <GameCards />
-          <GameCards />
-          <GameCards />
-          <GameCards />
+          <GameCards gameUrl="human-calculator" gameTitle="Human Calculator" />
         </div>
       </div>
     </div>

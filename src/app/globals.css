@@ -12,7 +12,10 @@ body,
   box-sizing: border-box;
   font-family: "Montserrat", sans-serif;
 }
-.h1 {
-  background-image: linear-gradient(315deg, #ffd045 0%, #d14545 74%);
-  background-color: #ffd045;
+
+.human-calculator {
+  background-image: url(./../assets/bg-math-1.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
 }
