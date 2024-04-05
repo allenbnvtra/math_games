@@ -12,21 +12,18 @@ const WhoWants = () => {
   const [earned, setEarned] = useState("0");
 
   const generateRandomQuestion = () => {
-    const operators = ["+", "-", "*", "/"];
+    const operators = ["+", "-", "x", "÷"];
     const operator = operators[Math.floor(Math.random() * operators.length)];
     let num1, num2, result;
 
-    // Generate random numbers for num1 and num2
-    num1 = Math.floor(Math.random() * 20) + 1; // Generate a random number between 1 and 20
-    num2 = Math.floor(Math.random() * 20) + 1; // Generate a random number between 1 and 20
+    num1 = Math.floor(Math.random() * 20) + 1;
+    num2 = Math.floor(Math.random() * 20) + 1;
 
-    // Calculate result based on the operator
     switch (operator) {
       case "+":
         result = num1 + num2;
         break;
       case "-":
-        // Ensure result is not negative
         if (num1 < num2) {
           const temp = num1;
           num1 = num2;
@@ -34,10 +31,10 @@ const WhoWants = () => {
         }
         result = num1 - num2;
         break;
-      case "*":
+      case "x":
         result = num1 * num2;
         break;
-      case "/":
+      case "÷":
         // Ensure result is an integer
         num1 = num1 * num2; // Make sure num1 is divisible by num2
         result = num1 / num2;
