@@ -1,5 +1,7 @@
 import React from "react";
 import GameCards from "./GameCards";
+import Millionaire from "@/assets/millionaire.jpeg";
+import Shapes from "@/assets/shapes.jpg";
 
 const GamesPage = () => {
   return (
@@ -10,7 +12,16 @@ const GamesPage = () => {
         </h1>
 
         <div className="px-10 flex flex-wrap justify-center gap-3">
-          <GameCards gameUrl="human-calculator" gameTitle="Human Calculator" />
+          <GameCards
+            imgUrl={Shapes}
+            gameUrl="shape-counting"
+            gameTitle="Shape Counting"
+          />
+          <GameCards
+            imgUrl={Millionaire}
+            gameUrl="who-wants-to-be-a-millionaire"
+            gameTitle="Who wants to be a millionaire"
+          />
         </div>
       </div>
     </div>

@@ -1,12 +1,22 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const HumanCalculatorPage = () => {
   const [gameStarted, setGameStarted] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(5);
+
+  useEffect(() => {
+    let timer;
+    if (gameStarted && timeLeft > 0) {
+      timer = setTimeout(() => {
+        setTimeLeft((prevTime) => prevTime - 1);
+      }, 1000);
+    }
+    return () => clearTimeout(timer);
+  }, [gameStarted, timeLeft]);
 
   const startGame = () => {
     setGameStarted(true);
-    // You can perform any necessary initialization logic here
   };
 
   return (
@@ -22,12 +32,16 @@ const HumanCalculatorPage = () => {
         </div>
       )}
       {gameStarted && (
-        <div className="px-20 py-14">
+        <div className="px-[9rem] py-20">
           <div className="flex flex-col bg-white border-4 border-orange-400 rounded-md px-8 py-8">
-            <div className="flex text-white font-bold text-lg">
+            <div className="flex justify-between mb-5 text-white font-bold text-lg">
               <div className="flex flex-col px-6 py-2 rounded-md bg-orange-500">
                 <h1>Life: 20</h1>
                 <h1>Points: 30</h1>
+              </div>
+
+              <div className="mt-4 text-center text-red-500 font-bold">
+                Time Left: {timeLeft} seconds
               </div>
             </div>
             <div className="flex justify-center items-center gap-[9rem]">
@@ -38,15 +52,15 @@ const HumanCalculatorPage = () => {
                 <span className="italic">=?</span>
               </div>
               <div className="flex flex-col gap-5 text-[6rem]">
-                <div className="bg-red-500 px-5 text-center text-white font-bold rounded-md border-2 border-slate-500 cursor-pointer">
+                <h1 className="bg-red-500 px-5 text-center text-white font-bold rounded-md border-2 border-slate-500 cursor-pointer">
                   25
-                </div>
-                <div className="bg-blue-500 px-5 text-center text-white font-bold rounded-md border-2 border-slate-500 cursor-pointer">
+                </h1>
+                <h1 className="bg-blue-500 px-5 text-center text-white font-bold rounded-md border-2 border-slate-500 cursor-pointer">
                   19
-                </div>
-                <div className="bg-green-500 px-5 text-center text-white font-bold rounded-md border-2 border-slate-500 cursor-pointer">
+                </h1>
+                <h1 className="bg-green-500 px-5 text-center text-white font-bold rounded-md border-2 border-slate-500 cursor-pointer">
                   15
-                </div>
+                </h1>
               </div>
             </div>
           </div>
