@@ -1,26 +1,33 @@
 import React from "react";
 import GameCards from "./GameCards";
 import Millionaire from "@/assets/millionaire.jpeg";
-import Shapes from "@/assets/shapes.jpg";
+// import Shapes from "@/assets/shapes.jpg";
+import Sudoku from "@/assets/sudoku.jpeg";
 
 const GamesPage = () => {
   return (
-    <div className="bg-orange-100">
+    <div
+      className="h-screen"
+      style={{
+        background:
+          "linear-gradient(111.4deg, rgb(209, 231, 235) 7.4%, rgb(238, 219, 199) 51.4%, rgb(255, 159, 122) 82.6%, rgb(255, 109, 58) 100.2%)",
+      }}
+    >
       <div className="px-20 py-5">
-        <h1 className="text-2xl text-slate-700 font-bold mb-4">
+        <h1 className="text-3xl text-slate-800 font-extrabold mb-4">
           Explore Games
         </h1>
 
-        <div className="px-10 flex flex-wrap justify-center gap-3">
+        <div className="px-10 flex flex-wrap justify-center gap-5">
           <GameCards
-            imgUrl={Shapes}
-            gameUrl="shape-counting"
-            gameTitle="Shape Counting"
+            imgUrl={Sudoku}
+            gameUrl="sudoku"
+            gameTitle="Sudoku Puzzle"
           />
           <GameCards
             imgUrl={Millionaire}
             gameUrl="who-wants-to-be-a-millionaire"
-            gameTitle="Who wants to be a millionaire"
+            gameTitle="Math Millionaire"
           />
         </div>
       </div>
