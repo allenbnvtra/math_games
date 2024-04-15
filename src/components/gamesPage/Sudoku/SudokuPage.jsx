@@ -207,16 +207,16 @@ const SudokuPage = () => {
           buttonStyle="btn--primary--solid"
           text="Clear"
         />
-        <Button
+        {/* <Button
           onClick={handleSolve}
           buttonStyle="btn--success--solid"
           text="Solve"
-        />
-        <Button
+        /> */}
+        {/* <Button
           onClick={handleHint}
           buttonStyle="btn--warning--solid"
           text="Hint"
-        />
+        /> */}
         <Button
           onClick={() => setShowDifficultySelectionModal((show) => !show)}
           buttonStyle="btn--danger--solid"

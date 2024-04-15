@@ -1,7 +1,7 @@
 import React from "react";
 import GameCards from "./GameCards";
 import Millionaire from "@/assets/millionaire.jpeg";
-// import Shapes from "@/assets/shapes.jpg";
+import Shapes from "@/assets/shapes.jpg";
 import Sudoku from "@/assets/sudoku.jpeg";
 
 const GamesPage = () => {
@@ -29,6 +29,7 @@ const GamesPage = () => {
             gameUrl="who-wants-to-be-a-millionaire"
             gameTitle="Math Millionaire"
           />
+          <GameCards imgUrl={Shapes} gameUrl="shape" gameTitle="Shape It" />
         </div>
       </div>
     </div>
