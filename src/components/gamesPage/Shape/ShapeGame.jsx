@@ -3,18 +3,22 @@
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import Circle from "@/assets/circle.png";
-import Square from "@/assets/square.jpg";
-import Sphere from "@/assets/triangle.jpg";
+import Triangle from "@/assets/triangle.jpg";
+import Prism from "@/assets/Prism.png";
+
 import Link from "next/link";
 
 const ShapeGame = () => {
   const [gameStarted, setGameStarted] = useState(false);
   const [shapes, setShapes] = useState([
     { name: "Circle", image: Circle },
-    { name: "Square", image: Square },
-    { name: "Sphere", image: Sphere },
+    { name: "Triangle", image: Triangle },
+    { name: "Prism", image: Prism },
   ]);
-  const [questionIndex, setQuestionIndex] = useState(0);
+
+  const [questionShape, setQuestionShape] = useState({});
+  const [choices, setChoices] = useState([]);
+
   const [score, setScore] = useState(0);
   const [life, setLife] = useState(3);
   const [gameOver, setGameOver] = useState(false);
@@ -31,30 +35,36 @@ const ShapeGame = () => {
   };
 
   const generateQuestion = () => {
-    const newIndex = Math.floor(Math.random() * shapes.length);
-    setQuestionIndex(newIndex);
-    shuffleShapes(); // Shuffle the shapes before rendering
+    const newQuestionIndex = Math.floor(Math.random() * shapes.length);
+    const newQuestionShape = shapes[newQuestionIndex];
+    setQuestionShape(newQuestionShape);
+
+    // Randomly select two other shapes as choices
+    const filteredShapes = shapes.filter(
+      (shape) => shape.name !== newQuestionShape.name
+    );
+    const randomChoices = [];
+    while (randomChoices.length < 2) {
+      const randomIndex = Math.floor(Math.random() * filteredShapes.length);
+      randomChoices.push(filteredShapes[randomIndex]);
+      filteredShapes.splice(randomIndex, 1);
+    }
+    randomChoices.push(newQuestionShape);
+    const shuffledChoices = randomChoices.sort(() => Math.random() - 0.5);
+    setChoices(shuffledChoices);
   };
 
   const handleAnswerClick = (selectedShape) => {
-    if (gameOver) return; // Stop processing clicks if game over
-    if (selectedShape === shapes[questionIndex].name) {
-      // Correct answer logic
+    if (gameOver) return;
+    if (selectedShape === questionShape.name) {
       setScore(score + 1);
-      generateQuestion();
     } else {
-      // Incorrect answer logic
       setLife(life - 1);
       if (life === 1) {
         setGameOver(true);
       }
     }
-  };
-
-  const shuffleShapes = () => {
-    // Shuffle the shapes array
-    const shuffledShapes = shapes.sort(() => Math.random() - 0.5);
-    setShapes([...shuffledShapes]);
+    generateQuestion();
   };
 
   return (
@@ -80,16 +90,16 @@ const ShapeGame = () => {
             </div>
             <div className="flex justify-center items-center gap-[9rem]">
               <div className="flex gap-2 text-[10rem] font-bold justify-center">
-                <Image src={shapes[questionIndex].image} height={400} alt="" />
+                <Image src={questionShape.image} height={400} alt="" />
               </div>
               <div className="flex flex-col gap-5 text-[6rem]">
-                {shapes.map((shape, index) => (
+                {choices.map((choice, index) => (
                   <div
                     key={index}
                     className="bg-orange-400 px-5 text-center text-white font-bold rounded-md border-2 border-slate-500 cursor-pointer"
-                    onClick={() => handleAnswerClick(shape.name)}
+                    onClick={() => handleAnswerClick(choice.name)}
                   >
-                    {shape.name}
+                    {choice.name}
                   </div>
                 ))}
               </div>
