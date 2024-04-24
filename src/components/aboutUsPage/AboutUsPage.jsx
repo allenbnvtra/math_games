@@ -21,7 +21,7 @@ const AboutUsPage = () => {
           <Image src={Picture} alt="" height={90} width={390} />
         </div>
         <h1 className="px-5 text-slate-900 text-sm font-light">
-          We are
+          We are{" "}
           <span className="font-bold text-md">
             Kyla Mae C. Mañaco and Maricella Mae I. Dela Cruz
           </span>
