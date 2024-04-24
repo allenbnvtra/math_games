@@ -15,6 +15,10 @@ import Parallelogram from "@/assets/shapes/parallelogram.webp";
 import Ellipse from "@/assets/shapes/ellipse.webp";
 import Crescent from "@/assets/shapes/crescent.png";
 import Pentagon from "@/assets/shapes/pentagon.png";
+import Decagon from "@/assets/shapes/decagon.png";
+import Nonagon from "@/assets/shapes/nonagon.jpg";
+import Cone from "@/assets/shapes/cone.png";
+
 import Link from "next/link";
 import { FaHome } from "react-icons/fa";
 
@@ -34,6 +38,9 @@ const ShapeGame = () => {
     { name: "Ellipse", image: Ellipse },
     { name: "Crescent", image: Crescent },
     { name: "Pentagon", image: Pentagon },
+    { name: "Decagon", image: Decagon },
+    { name: "Nonagon", image: Nonagon },
+    { name: "Cone", image: Cone },
   ]);
 
   const [questionShape, setQuestionShape] = useState({});
@@ -50,13 +57,13 @@ const ShapeGame = () => {
   const startGame = () => {
     setGameStarted(true);
     setScore(0);
-    setLife(2);
+    setLife(3);
     setGameOver(false);
     setQuestionCount(0);
   };
 
   const generateQuestion = () => {
-    if (questionCount >= 5) {
+    if (questionCount >= 10) {
       setGameOver(true);
       return;
     }
