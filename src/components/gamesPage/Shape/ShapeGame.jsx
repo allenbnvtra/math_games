@@ -18,6 +18,13 @@ import Pentagon from "@/assets/shapes/pentagon.png";
 import Decagon from "@/assets/shapes/decagon.png";
 import Nonagon from "@/assets/shapes/nonagon.jpg";
 import Cone from "@/assets/shapes/cone.png";
+import Trapezoid from "@/assets/shapes/trapezoid.jpg";
+import Hexagon from "@/assets/shapes/hexagon.png";
+import Octagon from "@/assets/shapes/octagon.png";
+import Sphere from "@/assets/shapes/sphere.png";
+import Tetrahedron from "@/assets/shapes/tetrahedron.png";
+import Dodecahedron from "@/assets/shapes/tetrahedron.png";
+import Heptagon from "@/assets/shapes/heptagon.webp";
 
 import Link from "next/link";
 import { FaHome } from "react-icons/fa";
@@ -26,7 +33,11 @@ const ShapeGame = () => {
   const [gameStarted, setGameStarted] = useState(false);
   const [shapes, setShapes] = useState([
     { name: "Circle", image: Circle },
+    { name: "Sphere", image: Sphere },
     { name: "Triangle", image: Triangle },
+    { name: "Tetrahedron", image: Tetrahedron },
+    { name: "Dodecahedron", image: Dodecahedron },
+    { name: "Heptagon", image: Heptagon },
     { name: "Prism", image: Prism },
     { name: "Cylinder", image: Cylinder },
     { name: "Pyramid", image: Pyramid },
@@ -41,8 +52,12 @@ const ShapeGame = () => {
     { name: "Decagon", image: Decagon },
     { name: "Nonagon", image: Nonagon },
     { name: "Cone", image: Cone },
+    { name: "Trapezoid", image: Trapezoid },
+    { name: "Hexagon", image: Hexagon },
+    { name: "Octagon", image: Octagon },
   ]);
 
+  const [usedShapes, setUsedShapes] = useState([]);
   const [questionShape, setQuestionShape] = useState({});
   const [choices, setChoices] = useState([]);
   const [score, setScore] = useState(0);
@@ -60,6 +75,7 @@ const ShapeGame = () => {
     setLife(3);
     setGameOver(false);
     setQuestionCount(0);
+    setUsedShapes([]);
   };
 
   const generateQuestion = () => {
@@ -71,12 +87,12 @@ const ShapeGame = () => {
     const newQuestionIndex = Math.floor(Math.random() * shapes.length);
     const newQuestionShape = shapes[newQuestionIndex];
     setQuestionShape(newQuestionShape);
+    setUsedShapes([...usedShapes, newQuestionShape]);
 
     const filteredShapes = shapes.filter(
-      (shape) => shape.name !== newQuestionShape.name
+      (shape) => !usedShapes.includes(shape)
     );
 
-    // Remove the current question shape from the choices
     const randomChoices = [];
     while (randomChoices.length < 2) {
       const randomIndex = Math.floor(Math.random() * filteredShapes.length);

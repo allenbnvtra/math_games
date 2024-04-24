@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from "react";
 import Start from "./Start";
 import Trivia from "./Trivia";
 import Timer from "./Timer";
-
 import { FaHome } from "react-icons/fa";
 import Link from "next/link";
 
@@ -21,11 +20,20 @@ const WhoWants = () => {
     const num3 = Math.floor(Math.random() * 20) + 1;
     const num4 = Math.floor(Math.random() * 20) + 1;
     const operator1 = operators[Math.floor(Math.random() * operators.length)];
-    const operator2 = operators[Math.floor(Math.random() * operators.length)];
-    const operator3 = operators[Math.floor(Math.random() * operators.length)];
 
-    // Generate random number of operations (1, 2, or 3)
-    const numOperations = Math.floor(Math.random() * 3) + 1;
+    let numOperations, operator2, operator3;
+
+    // Determine the number of operations based on the question number
+    if (questionNumber <= 5) {
+      numOperations = 1;
+    } else if (questionNumber <= 10) {
+      numOperations = 2;
+      operator2 = operators[Math.floor(Math.random() * operators.length)];
+    } else {
+      numOperations = 3;
+      operator2 = operators[Math.floor(Math.random() * operators.length)];
+      operator3 = operators[Math.floor(Math.random() * operators.length)];
+    }
 
     let result;
 
