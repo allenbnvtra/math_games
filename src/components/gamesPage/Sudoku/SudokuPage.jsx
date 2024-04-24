@@ -1,7 +1,9 @@
 "use client";
+
 import React, { useState } from "react";
 import "./Sudoku.css";
-import { AiOutlineMenu } from "react-icons/ai";
+import { FaHome } from "react-icons/fa";
+
 import {
   Grid,
   ChoiceBoard,
@@ -20,6 +22,7 @@ import {
   solveSudoku,
 } from "@/utility/index.js";
 import getHint from "@/utility/getHint";
+import Link from "next/link";
 
 const easyMaxEmptyCells = 30;
 const mediumMaxEmptyCells = 40;
@@ -152,11 +155,11 @@ const SudokuPage = () => {
 
   return (
     <div className="Game">
-      {/* <div className="show-game-detail-container-button">
-        <button onClick={() => setShowGameDetails((show) => !show)}>
-          <AiOutlineMenu />
-        </button>
-      </div> */}
+      <div className="pt-5 pl-36 w-full flex text-3xl cursor-pointer">
+        <Link href="/games">
+          <FaHome />
+        </Link>
+      </div>
 
       <h1
         onClick={() => setShowInformationModal((show) => !show)}
@@ -205,7 +208,7 @@ const SudokuPage = () => {
         <Button
           onClick={handleClearBoard}
           buttonStyle="btn--primary--solid"
-          text="Clear"
+          text="Reset"
         />
         {/* <Button
           onClick={handleSolve}
@@ -222,6 +225,10 @@ const SudokuPage = () => {
           buttonStyle="btn--danger--solid"
           text="New Game"
         />
+        <video className="background-video" autoPlay loop muted>
+          <source src="/sudoku.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
       </div>
     </div>
   );

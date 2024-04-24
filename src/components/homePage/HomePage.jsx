@@ -3,7 +3,7 @@ import Leaderboard from "./Leaderboard";
 
 const HomePage = () => {
   return (
-    <div>
+    <div className="flex flex-col">
       <Hero />
       <Leaderboard />
     </div>

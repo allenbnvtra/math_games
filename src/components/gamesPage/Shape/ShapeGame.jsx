@@ -2,11 +2,21 @@
 
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
-import Circle from "@/assets/circle.png";
-import Triangle from "@/assets/triangle.jpg";
-import Prism from "@/assets/Prism.png";
-
+import Circle from "@/assets/shapes/circle.png";
+import Triangle from "@/assets/shapes/triangle.jpg";
+import Prism from "@/assets/shapes/Prism.png";
+import Cylinder from "@/assets/shapes/cylinder.jpg";
+import Pyramid from "@/assets/shapes/pyramid.webp";
+import Square from "@/assets/shapes/square.png";
+import Rectangle from "@/assets/shapes/rectangle.png";
+import Rhombus from "@/assets/shapes/rhombus.png";
+import Oval from "@/assets/shapes/oval.png";
+import Parallelogram from "@/assets/shapes/parallelogram.webp";
+import Ellipse from "@/assets/shapes/ellipse.webp";
+import Crescent from "@/assets/shapes/crescent.png";
+import Pentagon from "@/assets/shapes/pentagon.png";
 import Link from "next/link";
+import { FaHome } from "react-icons/fa";
 
 const ShapeGame = () => {
   const [gameStarted, setGameStarted] = useState(false);
@@ -14,14 +24,24 @@ const ShapeGame = () => {
     { name: "Circle", image: Circle },
     { name: "Triangle", image: Triangle },
     { name: "Prism", image: Prism },
+    { name: "Cylinder", image: Cylinder },
+    { name: "Pyramid", image: Pyramid },
+    { name: "Square", image: Square },
+    { name: "Rectangle", image: Rectangle },
+    { name: "Rhombus", image: Rhombus },
+    { name: "Oval", image: Oval },
+    { name: "Parallelogram", image: Parallelogram },
+    { name: "Ellipse", image: Ellipse },
+    { name: "Crescent", image: Crescent },
+    { name: "Pentagon", image: Pentagon },
   ]);
 
   const [questionShape, setQuestionShape] = useState({});
   const [choices, setChoices] = useState([]);
-
   const [score, setScore] = useState(0);
   const [life, setLife] = useState(3);
   const [gameOver, setGameOver] = useState(false);
+  const [questionCount, setQuestionCount] = useState(0);
 
   useEffect(() => {
     if (gameStarted) generateQuestion();
@@ -30,16 +50,21 @@ const ShapeGame = () => {
   const startGame = () => {
     setGameStarted(true);
     setScore(0);
-    setLife(3);
+    setLife(2);
     setGameOver(false);
+    setQuestionCount(0);
   };
 
   const generateQuestion = () => {
+    if (questionCount >= 5) {
+      setGameOver(true);
+      return;
+    }
+
     const newQuestionIndex = Math.floor(Math.random() * shapes.length);
     const newQuestionShape = shapes[newQuestionIndex];
     setQuestionShape(newQuestionShape);
 
-    // Randomly select two other shapes as choices
     const filteredShapes = shapes.filter(
       (shape) => shape.name !== newQuestionShape.name
     );
@@ -52,6 +77,8 @@ const ShapeGame = () => {
     randomChoices.push(newQuestionShape);
     const shuffledChoices = randomChoices.sort(() => Math.random() - 0.5);
     setChoices(shuffledChoices);
+
+    setQuestionCount((count) => count + 1);
   };
 
   const handleAnswerClick = (selectedShape) => {
@@ -82,10 +109,16 @@ const ShapeGame = () => {
       {gameStarted && !gameOver && (
         <div className="px-20 py-14">
           <div className="flex flex-col bg-white border-4 border-orange-400 rounded-md px-8 py-8">
-            <div className="flex text-white font-bold text-lg">
+            <div className="flex justify-between text-white font-bold text-lg mb-10">
               <div className="flex flex-col px-6 py-2 rounded-md bg-orange-500">
                 <h1>Life: {life}</h1>
                 <h1>Score: {score}</h1>
+              </div>
+
+              <div className="pt-5 pl-36 text-3xl cursor-pointer text-black">
+                <Link href="/games">
+                  <FaHome />
+                </Link>
               </div>
             </div>
             <div className="flex justify-center items-center gap-[9rem]">
@@ -109,7 +142,9 @@ const ShapeGame = () => {
       )}
       {gameOver && (
         <div className="flex flex-col gap-5 justify-center items-center h-screen">
-          <h1 className="text-4xl font-bold text-red-500">Game Over!</h1>
+          <p className="text-lg">
+            Congratulations! You have earned {score} points.
+          </p>
           <Link href="/games">
             <button className="bg-orange-500 text-white px-5 py-2 font-bold rounded-md hover:bg-orange-400">
               Play more games

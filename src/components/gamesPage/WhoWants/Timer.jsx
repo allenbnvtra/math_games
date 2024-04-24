@@ -14,7 +14,7 @@ export default function Timer({ setTimeOut, questionNumber }) {
   }, [timer, setTimeOut]);
 
   useEffect(() => {
-    setTimer(10);
+    setTimer(20);
   }, [questionNumber]);
   return timer;
 }

@@ -5,6 +5,9 @@ import Start from "./Start";
 import Trivia from "./Trivia";
 import Timer from "./Timer";
 
+import { FaHome } from "react-icons/fa";
+import Link from "next/link";
+
 const WhoWants = () => {
   const [username, setUsername] = useState(null);
   const [timeOut, setTimeOut] = useState(false);
@@ -13,38 +16,54 @@ const WhoWants = () => {
 
   const generateRandomQuestion = () => {
     const operators = ["+", "-", "x", "÷"];
-    const operator = operators[Math.floor(Math.random() * operators.length)];
-    let num1, num2, result;
+    const num1 = Math.floor(Math.random() * 20) + 1;
+    const num2 = Math.floor(Math.random() * 20) + 1;
+    const num3 = Math.floor(Math.random() * 20) + 1;
+    const operator1 = operators[Math.floor(Math.random() * operators.length)];
+    const operator2 = operators[Math.floor(Math.random() * operators.length)];
+    let result;
 
-    num1 = Math.floor(Math.random() * 20) + 1;
-    num2 = Math.floor(Math.random() * 20) + 1;
-
-    switch (operator) {
+    // Calculate intermediate result for the first operation
+    let intermediateResult;
+    switch (operator1) {
       case "+":
-        result = num1 + num2;
+        intermediateResult = num1 + num2;
         break;
       case "-":
-        if (num1 < num2) {
-          const temp = num1;
-          num1 = num2;
-          num2 = temp;
-        }
-        result = num1 - num2;
+        intermediateResult = num1 - num2;
         break;
       case "x":
-        result = num1 * num2;
+        intermediateResult = num1 * num2;
         break;
       case "÷":
         // Ensure result is an integer
-        num1 = num1 * num2; // Make sure num1 is divisible by num2
-        result = num1 / num2;
+        intermediateResult = Math.floor(num1 / num2);
         break;
       default:
-        result = num1 + num2; // Default to addition
+        intermediateResult = num1 + num2; // Default to addition
+    }
+
+    // Calculate final result using the second operation
+    switch (operator2) {
+      case "+":
+        result = intermediateResult + num3;
+        break;
+      case "-":
+        result = intermediateResult - num3;
+        break;
+      case "x":
+        result = intermediateResult * num3;
+        break;
+      case "÷":
+        // Ensure result is an integer
+        result = Math.floor(intermediateResult / num3);
+        break;
+      default:
+        result = intermediateResult + num3; // Default to addition
     }
 
     // Construct the question string
-    const question = `What is ${num1} ${operator} ${num2}?`;
+    const question = `What is the result of the following arithmetic expression: ${num1} ${operator1} ${num2} ${operator2} ${num3}?`;
 
     // Construct answers array with shuffled options
     const answers = [{ text: `${result}`, correct: true }];
@@ -115,6 +134,11 @@ const WhoWants = () => {
       ) : (
         <>
           <div className="main">
+            <div className="pt-5 pl-5 text-3xl cursor-pointer">
+              <Link href="/games">
+                <FaHome />
+              </Link>
+            </div>
             {timeOut ? (
               <h1 className="endText">You earned: {earned}</h1>
             ) : (
