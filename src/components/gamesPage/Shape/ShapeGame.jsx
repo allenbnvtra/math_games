@@ -142,7 +142,7 @@ const ShapeGame = () => {
       )}
       {gameOver && (
         <div className="flex flex-col gap-5 justify-center items-center h-screen">
-          <p className="text-lg">
+          <p className="text-lg text-white font-semibold">
             Congratulations! You have earned {score} points.
           </p>
           <Link href="/games">

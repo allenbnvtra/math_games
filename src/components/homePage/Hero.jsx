@@ -9,6 +9,11 @@ const Hero = () => {
         muted
         playsInline
         className="w-full h-auto inset-0 object-cover z-0"
+        ref={(video) => {
+          if (video) {
+            video.playbackRate = 2;
+          }
+        }}
       >
         <source src="logo_web.mp4" type="video/mp4" />
         Your browser does not support the video tag.
