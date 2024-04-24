@@ -75,6 +75,8 @@ const ShapeGame = () => {
     const filteredShapes = shapes.filter(
       (shape) => shape.name !== newQuestionShape.name
     );
+
+    // Remove the current question shape from the choices
     const randomChoices = [];
     while (randomChoices.length < 2) {
       const randomIndex = Math.floor(Math.random() * filteredShapes.length);

@@ -19,51 +19,54 @@ const WhoWants = () => {
     const num1 = Math.floor(Math.random() * 20) + 1;
     const num2 = Math.floor(Math.random() * 20) + 1;
     const num3 = Math.floor(Math.random() * 20) + 1;
+    const num4 = Math.floor(Math.random() * 20) + 1;
     const operator1 = operators[Math.floor(Math.random() * operators.length)];
     const operator2 = operators[Math.floor(Math.random() * operators.length)];
+    const operator3 = operators[Math.floor(Math.random() * operators.length)];
+
+    // Generate random number of operations (1, 2, or 3)
+    const numOperations = Math.floor(Math.random() * 3) + 1;
+
     let result;
 
-    // Calculate intermediate result for the first operation
-    let intermediateResult;
-    switch (operator1) {
-      case "+":
-        intermediateResult = num1 + num2;
+    // Calculate result based on the number of operations
+    switch (numOperations) {
+      case 1:
+        result = performOperation(num1, num2, operator1);
         break;
-      case "-":
-        intermediateResult = num1 - num2;
+      case 2:
+        result = performOperation(
+          performOperation(num1, num2, operator1),
+          num3,
+          operator2
+        );
         break;
-      case "x":
-        intermediateResult = num1 * num2;
-        break;
-      case "÷":
-        // Ensure result is an integer
-        intermediateResult = Math.floor(num1 / num2);
-        break;
-      default:
-        intermediateResult = num1 + num2; // Default to addition
-    }
-
-    // Calculate final result using the second operation
-    switch (operator2) {
-      case "+":
-        result = intermediateResult + num3;
-        break;
-      case "-":
-        result = intermediateResult - num3;
-        break;
-      case "x":
-        result = intermediateResult * num3;
-        break;
-      case "÷":
-        // Ensure result is an integer
-        result = Math.floor(intermediateResult / num3);
+      case 3:
+        result = performOperation(
+          performOperation(
+            performOperation(num1, num2, operator1),
+            num3,
+            operator2
+          ),
+          num4,
+          operator3
+        );
         break;
       default:
-        result = intermediateResult + num3; // Default to addition
+        result = performOperation(num1, num2, operator1);
     }
 
     // Construct the question string
-    const question = `What is the result of the following arithmetic expression: ${num1} ${operator1} ${num2} ${operator2} ${num3}?`;
+    const question = generateQuestionString(
+      num1,
+      num2,
+      num3,
+      num4,
+      operator1,
+      operator2,
+      operator3,
+      numOperations
+    );
 
     // Construct answers array with shuffled options
     const answers = [{ text: `${result}`, correct: true }];
@@ -88,6 +91,45 @@ const WhoWants = () => {
     answers.sort(() => Math.random() - 0.5);
 
     return { question, answers };
+  };
+
+  // Function to perform arithmetic operation
+  const performOperation = (num1, num2, operator) => {
+    switch (operator) {
+      case "+":
+        return num1 + num2;
+      case "-":
+        return num1 - num2;
+      case "x":
+        return num1 * num2;
+      case "÷":
+        // Ensure result is an integer
+        return Math.floor(num1 / num2);
+      default:
+        return num1 + num2; // Default to addition
+    }
+  };
+
+  // Function to generate question string
+  const generateQuestionString = (
+    num1,
+    num2,
+    num3,
+    num4,
+    operator1,
+    operator2,
+    operator3,
+    numOperations
+  ) => {
+    let question = `What is the result of the following arithmetic expression: ${num1} ${operator1} ${num2}`;
+    if (numOperations > 1) {
+      question += ` ${operator2} ${num3}`;
+      if (numOperations > 2) {
+        question += ` ${operator3} ${num4}`;
+      }
+    }
+    question += "?";
+    return question;
   };
 
   const generateQuestions = (numQuestions) => {
