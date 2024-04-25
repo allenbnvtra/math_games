@@ -15,54 +15,42 @@ const WhoWants = () => {
 
   const generateRandomQuestion = () => {
     const operators = ["+", "-", "x", "÷"];
-    const num1 = Math.floor(Math.random() * 20) + 1;
-    const num2 = Math.floor(Math.random() * 20) + 1;
-    const num3 = Math.floor(Math.random() * 20) + 1;
-    const num4 = Math.floor(Math.random() * 20) + 1;
-    const operator1 = operators[Math.floor(Math.random() * operators.length)];
-
-    let numOperations, operator2, operator3;
-
-    // Determine the number of operations based on the question number
-    if (questionNumber <= 5) {
-      numOperations = 1;
-    } else if (questionNumber <= 10) {
-      numOperations = 2;
-      operator2 = operators[Math.floor(Math.random() * operators.length)];
-    } else {
-      numOperations = 3;
-      operator2 = operators[Math.floor(Math.random() * operators.length)];
-      operator3 = operators[Math.floor(Math.random() * operators.length)];
-    }
-
+    let num1, num2, num3, num4, operator1, operator2, operator3;
     let result;
 
-    // Calculate result based on the number of operations
-    switch (numOperations) {
-      case 1:
+    do {
+      // Generate random numbers
+      num1 = Math.floor(Math.random() * 20) + 1;
+      num2 = Math.floor(Math.random() * 20) + 1;
+      num3 = Math.floor(Math.random() * 20) + 1;
+      num4 = Math.floor(Math.random() * 20) + 1;
+
+      // Use the same operators set for each level
+      if (questionNumber <= 9) {
+        operator1 = operators[Math.floor(Math.random() * 4)];
+      } else if (questionNumber <= 14) {
+        operator1 = operators[Math.floor(Math.random() * 4)];
+        operator2 = operators[Math.floor(Math.random() * 4)];
+      } else {
+        operator1 = operators[Math.floor(Math.random() * 4)];
+        operator2 = operators[Math.floor(Math.random() * 4)];
+        operator3 = operators[Math.floor(Math.random() * 4)];
+      }
+
+      // Calculate result based on the number of operations
+      if (!operator3) {
         result = performOperation(num1, num2, operator1);
-        break;
-      case 2:
-        result = performOperation(
-          performOperation(num1, num2, operator1),
-          num3,
-          operator2
-        );
-        break;
-      case 3:
-        result = performOperation(
-          performOperation(
-            performOperation(num1, num2, operator1),
-            num3,
-            operator2
-          ),
-          num4,
-          operator3
-        );
-        break;
-      default:
+        if (num3 && operator2) {
+          result = performOperation(result, num3, operator2);
+        }
+      } else {
         result = performOperation(num1, num2, operator1);
-    }
+        result = performOperation(result, num3, operator2);
+        result = performOperation(result, num4, operator3);
+      }
+
+      // If the result is not a whole number or is less than 0, repeat the process
+    } while (!Number.isInteger(result) || result < 0);
 
     // Construct the question string
     const question = generateQuestionString(
@@ -72,8 +60,7 @@ const WhoWants = () => {
       num4,
       operator1,
       operator2,
-      operator3,
-      numOperations
+      operator3
     );
 
     // Construct answers array with shuffled options
@@ -85,7 +72,7 @@ const WhoWants = () => {
       let incorrectAnswer;
       do {
         // Generate a random incorrect answer
-        incorrectAnswer = Math.floor(Math.random() * 40) + 1;
+        incorrectAnswer = Math.floor(Math.random() * 5) + result + 1; // Adjust range as needed
       } while (
         incorrectAnswer === result ||
         usedIncorrectAnswers.has(incorrectAnswer)
@@ -124,13 +111,12 @@ const WhoWants = () => {
     num4,
     operator1,
     operator2,
-    operator3,
-    numOperations
+    operator3
   ) => {
     let question = `What is the result of the following arithmetic expression: ${num1} ${operator1} ${num2}`;
-    if (numOperations > 1) {
+    if (operator2) {
       question += ` ${operator2} ${num3}`;
-      if (numOperations > 2) {
+      if (operator3) {
         question += ` ${operator3} ${num4}`;
       }
     }
@@ -171,8 +157,11 @@ const WhoWants = () => {
   );
 
   useEffect(() => {
-    questionNumber > 1 &&
+    if (questionNumber > 1 && questionNumber <= 15) {
       setEarned(moneyPyramid.find((m) => m.id === questionNumber - 1).amount);
+    } else if (questionNumber > 15) {
+      setEarned("15 points");
+    }
   }, [questionNumber, moneyPyramid]);
 
   return (
