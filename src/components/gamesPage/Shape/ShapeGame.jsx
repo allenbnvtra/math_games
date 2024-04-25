@@ -93,11 +93,16 @@ const ShapeGame = () => {
       (shape) => !usedShapes.includes(shape)
     );
 
+    // Exclude the correct answer from the choices
+    const filteredChoices = filteredShapes.filter(
+      (shape) => shape.name !== newQuestionShape.name
+    );
+
     const randomChoices = [];
     while (randomChoices.length < 2) {
-      const randomIndex = Math.floor(Math.random() * filteredShapes.length);
-      randomChoices.push(filteredShapes[randomIndex]);
-      filteredShapes.splice(randomIndex, 1);
+      const randomIndex = Math.floor(Math.random() * filteredChoices.length);
+      randomChoices.push(filteredChoices[randomIndex]);
+      filteredChoices.splice(randomIndex, 1);
     }
     randomChoices.push(newQuestionShape);
     const shuffledChoices = randomChoices.sort(() => Math.random() - 0.5);

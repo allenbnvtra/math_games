@@ -101,7 +101,6 @@ const WhoWants = () => {
     return { question, answers };
   };
 
-  // Function to perform arithmetic operation
   const performOperation = (num1, num2, operator) => {
     switch (operator) {
       case "+":
@@ -111,8 +110,7 @@ const WhoWants = () => {
       case "x":
         return num1 * num2;
       case "÷":
-        // Ensure result is an integer
-        return Math.floor(num1 / num2);
+        return num1 / num2;
       default:
         return num1 + num2; // Default to addition
     }
