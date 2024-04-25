@@ -47,11 +47,14 @@ const AboutUsPage = () => {
           <span className="pl-8">We</span> believe that by fostering a positive
           and supportive learning environment, we can inspire a lifelong
           appreciation for mathematics and equip students with the confidence
-          and competence to excel in this important subject. Join us on this
-          journey as we strive to make mathematics a subject that ignites
-          curiosity, sparks creativity, and unlocks endless possibilities for
-          growth and achievement. Together, let's enrich mathematical skills and
-          pave the way for a brighter future.
+          and competence to excel in this important subject.
+          <br />
+          <br />
+          <span className="pl-8">Join</span> us on this journey as we strive to
+          make mathematics a subject that ignites curiosity, sparks creativity,
+          and unlocks endless possibilities for growth and achievement.
+          Together, let's enrich mathematical skills and pave the way for a
+          brighter future.
         </h1>
       </div>
     </div>
