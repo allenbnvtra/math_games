@@ -26,7 +26,7 @@ const WhoWants = () => {
       num4 = Math.floor(Math.random() * 20) + 1;
 
       // Use the same operators set for each level
-      if (questionNumber <= 9) {
+      if (questionNumber <= 10) {
         operator1 = operators[Math.floor(Math.random() * 4)];
       } else if (questionNumber <= 14) {
         operator1 = operators[Math.floor(Math.random() * 4)];
@@ -37,7 +37,6 @@ const WhoWants = () => {
         operator3 = operators[Math.floor(Math.random() * 4)];
       }
 
-      // Calculate result based on the number of operations
       if (!operator3) {
         result = performOperation(num1, num2, operator1);
         if (num3 && operator2) {
@@ -48,11 +47,8 @@ const WhoWants = () => {
         result = performOperation(result, num3, operator2);
         result = performOperation(result, num4, operator3);
       }
-
-      // If the result is not a whole number or is less than 0, repeat the process
     } while (!Number.isInteger(result) || result < 0);
 
-    // Construct the question string
     const question = generateQuestionString(
       num1,
       num2,
@@ -63,7 +59,6 @@ const WhoWants = () => {
       operator3
     );
 
-    // Construct answers array with shuffled options
     const answers = [{ text: `${result}`, correct: true }];
 
     const usedIncorrectAnswers = new Set();
@@ -71,12 +66,13 @@ const WhoWants = () => {
     for (let i = 0; i < 3; i++) {
       let incorrectAnswer;
       do {
-        // Generate a random incorrect answer
-        incorrectAnswer = Math.floor(Math.random() * 5) + result + 1; // Adjust range as needed
+        let plusOrMinus = Math.random() < 0.5 ? -1 : 1;
+        let randomOffset = Math.floor(Math.random() * 10) + 1; // Generate a random offset value
+        incorrectAnswer = result + plusOrMinus * randomOffset;
       } while (
-        incorrectAnswer === result ||
+        incorrectAnswer === result || // Ensure the incorrect answer is not the same as the correct one
         usedIncorrectAnswers.has(incorrectAnswer)
-      ); // Ensure the incorrect answer is not equal to the correct answer or repeated
+      );
 
       answers.push({ text: `${incorrectAnswer}`, correct: false });
       usedIncorrectAnswers.add(incorrectAnswer);
@@ -134,28 +130,19 @@ const WhoWants = () => {
 
   const data = generateQuestions(15);
 
+  // Money pyramid data
   const moneyPyramid = useMemo(
     () =>
-      [
-        { id: 1, amount: "1 point" },
-        { id: 2, amount: "2 points" },
-        { id: 3, amount: "3 points" },
-        { id: 4, amount: "4 points" },
-        { id: 5, amount: "5 points" },
-        { id: 6, amount: "6 points" },
-        { id: 7, amount: "7 points" },
-        { id: 8, amount: "8 points" },
-        { id: 9, amount: "9 points" },
-        { id: 10, amount: "10 points" },
-        { id: 11, amount: "11 points" },
-        { id: 12, amount: "12 points" },
-        { id: 13, amount: "13 points" },
-        { id: 14, amount: "14 points" },
-        { id: 15, amount: "15 points" },
-      ].reverse(),
+      [...Array(15).keys()]
+        .map((i) => ({
+          id: i + 1,
+          amount: `${i + 1} point${i !== 0 ? "s" : ""}`,
+        }))
+        .reverse(),
     []
   );
 
+  // Update earned amount
   useEffect(() => {
     if (questionNumber > 1 && questionNumber <= 15) {
       setEarned(moneyPyramid.find((m) => m.id === questionNumber - 1).amount);
