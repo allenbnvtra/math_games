@@ -93,7 +93,6 @@ const ShapeGame = () => {
       (shape) => !usedShapes.includes(shape)
     );
 
-    // Exclude the correct answer from the choices
     const filteredChoices = filteredShapes.filter(
       (shape) => shape.name !== newQuestionShape.name
     );
