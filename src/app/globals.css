@@ -53,7 +53,7 @@ body,
 .moneyListItem {
   display: flex;
   align-items: center;
-  padding: 5px;
+  padding: 2px;
   border-radius: 5px;
 }
 

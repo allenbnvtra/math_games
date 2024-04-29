@@ -28,7 +28,7 @@ const WhoWants = () => {
       // Use the same operators set for each level
       if (questionNumber <= 10) {
         operator1 = operators[Math.floor(Math.random() * 4)];
-      } else if (questionNumber <= 14) {
+      } else if (questionNumber <= 17) {
         operator1 = operators[Math.floor(Math.random() * 4)];
         operator2 = operators[Math.floor(Math.random() * 4)];
       } else {
@@ -128,12 +128,12 @@ const WhoWants = () => {
     return questions;
   };
 
-  const data = generateQuestions(15);
+  const data = generateQuestions(20);
 
   // Money pyramid data
   const moneyPyramid = useMemo(
     () =>
-      [...Array(15).keys()]
+      [...Array(20).keys()]
         .map((i) => ({
           id: i + 1,
           amount: `${i + 1} point${i !== 0 ? "s" : ""}`,
@@ -144,10 +144,10 @@ const WhoWants = () => {
 
   // Update earned amount
   useEffect(() => {
-    if (questionNumber > 1 && questionNumber <= 15) {
+    if (questionNumber > 1 && questionNumber <= 20) {
       setEarned(moneyPyramid.find((m) => m.id === questionNumber - 1).amount);
-    } else if (questionNumber > 15) {
-      setEarned("15 points");
+    } else if (questionNumber > 20) {
+      setEarned("20 points");
     }
   }, [questionNumber, moneyPyramid]);
 
