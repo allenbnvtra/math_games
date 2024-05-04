@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import Crown from "@/assets/LeaderboardPlaceCrown.webp";
 import Star from "@/assets/topLeader.webp";
 import axios from "axios";
 
@@ -32,7 +31,6 @@ const TopPlayerTable = ({ title }) => {
             {leaderboard.map((player, index) => (
               <tr key={index} className="border-none">
                 <td className="py-3 px-6 text-left flex gap-2 text-slate-700 border-none">
-                  {/* <Image src={Crown} width={25} alt="" /> */}
                   {player.name}
                 </td>
                 <td className="py-3 px-14 text-left text-red-600 border-none">
