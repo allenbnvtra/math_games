@@ -76,13 +76,13 @@ export async function GET() {
   try {
     await dbConnect();
 
-    const users = await User.find({}, "name score")
-      .sort({ score: -1 })
+    const users = await User.find({}, "name totalPoints")
+      .sort({ totalPoints: -1 })
       .limit(5);
 
     const leaderboard = users.map((user) => ({
       name: user.name,
-      score: user.score,
+      score: user.totalPoints,
     }));
 
     return NextResponse.json({ status: "success", leaderboard });

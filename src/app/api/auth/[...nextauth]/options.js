@@ -75,7 +75,6 @@ export const options = {
         session.user.role = token.role;
         session.user.password = undefined;
       }
-      console.log(session);
       return session;
     },
   },

@@ -1,4 +1,5 @@
 import dbConnect from "@/lib/db/db";
+import Quiz from "@/model/quiz";
 import quizItem from "@/model/quizItem";
 import { NextResponse } from "next/server";
 
@@ -65,6 +66,27 @@ export async function GET(req, { params }) {
     );
   } catch (error) {
     console.error(error);
+    return NextResponse.json(
+      {
+        status: "fail",
+        message: "Failed to get quiz items",
+      },
+      { status: 400 }
+    );
+  }
+}
+
+export async function DELETE(req, { params }) {
+  try {
+    await dbConnect();
+    const result = await Quiz.findByIdAndDelete(params.quizId);
+    console.log("Deleted quiz:", result);
+    return NextResponse.json({
+      status: "success",
+      result,
+    });
+  } catch (error) {
+    console.error("Error deleting quiz:", error);
     return NextResponse.json(
       {
         status: "fail",

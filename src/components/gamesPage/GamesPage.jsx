@@ -43,12 +43,21 @@ const GamesPage = () => {
     return (
       <div className="flex flex-col justify-center  items-center h-screen">
         <p>You need to login to access the games.</p>
-        <button
-          onClick={() => setLoginModal(true)}
-          className="bg-orange-600 hover:bg-orange-500 text-white font-semibold py-2 px-5 mt-5 rounded-md"
-        >
-          Login
-        </button>
+        <div className="flex gap-3">
+          <Link
+            href="/"
+            className="bg-orange-600 hover:bg-orange-500 text-white font-semibold py-2 px-5 mt-5 rounded-md"
+          >
+            Home
+          </Link>
+
+          <button
+            onClick={() => setLoginModal(true)}
+            className="bg-orange-600 hover:bg-orange-500 text-white font-semibold py-2 px-5 mt-5 rounded-md"
+          >
+            Login
+          </button>
+        </div>
 
         <LoginModal
           isLoginOpen={loginModal}

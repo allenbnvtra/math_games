@@ -35,7 +35,7 @@ export async function POST(request) {
   }
 }
 
-export async function GET() {
+export async function GET(req, { params }) {
   try {
     await dbConnect();
     const data = await Quiz.find().sort({
@@ -58,5 +58,16 @@ export async function GET() {
       },
       { status: 400 }
     );
+  }
+}
+
+export async function DELETE(req, { params }) {
+  try {
+    await dbConnect();
+    const result = await Quiz.findByIdAndDelete(params.quizId);
+    console.log("Deleted quiz:", result);
+  } catch (error) {
+    console.error("Error deleting quiz:", error);
+    throw error;
   }
 }
