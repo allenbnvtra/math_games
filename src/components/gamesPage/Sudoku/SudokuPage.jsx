@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Sudoku.css";
-import { FaHome } from "react-icons/fa";
+import { TiArrowBackOutline } from "react-icons/ti";
 
 import {
   Grid,
@@ -44,6 +44,20 @@ const SudokuPage = () => {
   const [showGameDetails, setShowGameDetails] = useState(false);
   const [showDifficultySelectionModal, setShowDifficultySelectionModal] =
     useState(false);
+
+  useEffect(() => {
+    if (isPlayerWon) {
+      sendScoreToServer(20);
+    }
+  }, [isPlayerWon]);
+
+  const sendScoreToServer = async (score) => {
+    try {
+      await axios.post("/api/score", { score });
+    } catch (error) {
+      console.error("Error sending score:", error);
+    }
+  };
 
   const handleSolve = () => {
     let solvedBoard = arrayDeepCopy(grid);
@@ -155,9 +169,9 @@ const SudokuPage = () => {
 
   return (
     <div className="Game">
-      <div className="pt-5 pl-36 w-full flex text-3xl cursor-pointer">
+      <div className="pt-5 pl-36 w-full flex text-5xl cursor-pointer">
         <Link href="/games">
-          <FaHome />
+          <TiArrowBackOutline />
         </Link>
       </div>
 

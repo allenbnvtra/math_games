@@ -1,9 +1,15 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import GameCards from "./GameCards";
 import Millionaire from "@/assets/millionaire.jpeg";
 import Shapes from "@/assets/shapes.jpg";
 import Sudoku from "@/assets/sudoku.jpeg";
 import Link from "next/link";
+import { IoIosAddCircleOutline } from "react-icons/io";
+import AddQuizModal from "../modals/AddQuizModal";
+import { useSession } from "next-auth/react";
+import LoginModal from "../modals/LoginModal";
 
 const helpMessages = {
   sudoku: {
@@ -23,6 +29,35 @@ const helpMessages = {
 };
 
 const GamesPage = () => {
+  const [openQuiz, setOpenQuiz] = useState(false);
+  const [loginModal, setLoginModal] = useState(false);
+
+  const session = useSession();
+  const isSession = session?.data?.user;
+
+  // if (loading) {
+  //   return <div>Loading...</div>;
+  // }
+
+  if (!isSession) {
+    return (
+      <div className="flex flex-col justify-center  items-center h-screen">
+        <p>You need to login to access the games.</p>
+        <button
+          onClick={() => setLoginModal(true)}
+          className="bg-orange-600 hover:bg-orange-500 text-white font-semibold py-2 px-5 mt-5 rounded-md"
+        >
+          Login
+        </button>
+
+        <LoginModal
+          isLoginOpen={loginModal}
+          onClose={() => setLoginModal(false)}
+        />
+      </div>
+    );
+  }
+
   return (
     <div
       className="h-screen"
@@ -31,21 +66,23 @@ const GamesPage = () => {
           "linear-gradient(111.4deg, rgb(209, 231, 235) 7.4%, rgb(238, 219, 199) 51.4%, rgb(255, 159, 122) 82.6%, rgb(255, 109, 58) 100.2%)",
       }}
     >
-      <div className="px-20 py-5 flex flex-col gap-10 ">
-        <div className="flex items-center justify-between">
-          <h1 className="text-3xl text-slate-800 font-extrabold mb-4">
+      <div className="py-5 md:px-10 sm:px-7 flex flex-col gap-10 ">
+        <div className="px-3 flex items-center justify-between">
+          <h1 className="text-xl lg:text-3xl sm:text-2xl text-slate-800 font-extrabold mb-4">
             Explore Games
           </h1>
 
-          <Link
-            className="bg-orange-600 text-white px-5 py-3 rounded-md"
-            href="/"
-          >
-            Go back Home
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link
+              className="bg-orange-600 text-white px-5 py-3 rounded-md"
+              href="/"
+            >
+              Home
+            </Link>
+          </div>
         </div>
 
-        <div className="px-10 flex flex-wrap justify-center gap-5">
+        <div className="px-3 flex flex-wrap justify-center gap-5">
           <GameCards
             imgUrl={Sudoku}
             gameUrl="sudoku"

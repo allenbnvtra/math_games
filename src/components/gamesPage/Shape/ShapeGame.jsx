@@ -27,9 +27,13 @@ import Dodecahedron from "@/assets/shapes/tetrahedron.png";
 import Heptagon from "@/assets/shapes/heptagon.webp";
 
 import Link from "next/link";
-import { FaHome } from "react-icons/fa";
+import { TiArrowBackOutline } from "react-icons/ti";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const ShapeGame = () => {
+  const router = useRouter();
+
   const [gameStarted, setGameStarted] = useState(false);
   const [shapes, setShapes] = useState([
     { name: "Circle", image: Circle },
@@ -69,6 +73,12 @@ const ShapeGame = () => {
     if (gameStarted) generateQuestion();
   }, [gameStarted]);
 
+  useEffect(() => {
+    if (gameOver) {
+      submitScore();
+    }
+  }, [gameOver]);
+
   const startGame = () => {
     setGameStarted(true);
     setScore(0);
@@ -76,6 +86,16 @@ const ShapeGame = () => {
     setGameOver(false);
     setQuestionCount(0);
     setUsedShapes([]);
+  };
+
+  const submitScore = async () => {
+    try {
+      console.log("Submitting score:", score);
+      await axios.post("/api/score", { score });
+      router.push("/games");
+    } catch (error) {
+      console.error("Error submitting score:", error);
+    }
   };
 
   const generateQuestion = () => {
@@ -111,7 +131,10 @@ const ShapeGame = () => {
   };
 
   const handleAnswerClick = (selectedShape) => {
-    if (gameOver) return;
+    if (gameOver) {
+      return;
+    }
+
     if (selectedShape === questionShape.name) {
       setScore(score + 1);
     } else {
@@ -144,9 +167,9 @@ const ShapeGame = () => {
                 <h1>Score: {score}</h1>
               </div>
 
-              <div className="pt-5 pl-36 text-3xl cursor-pointer text-black">
+              <div className="pt-5 pl-36 text-5xl cursor-pointer text-black">
                 <Link href="/games">
-                  <FaHome />
+                  <TiArrowBackOutline />
                 </Link>
               </div>
             </div>

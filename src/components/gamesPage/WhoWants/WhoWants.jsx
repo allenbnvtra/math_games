@@ -4,14 +4,29 @@ import { useEffect, useMemo, useState } from "react";
 import Start from "./Start";
 import Trivia from "./Trivia";
 import Timer from "./Timer";
-import { FaHome } from "react-icons/fa";
 import Link from "next/link";
+import { TiArrowBackOutline } from "react-icons/ti";
+import axios from "axios";
 
 const WhoWants = () => {
   const [username, setUsername] = useState(null);
   const [timeOut, setTimeOut] = useState(false);
   const [questionNumber, setQuestionNumber] = useState(1);
   const [earned, setEarned] = useState("0");
+
+  const sendScoreToServer = async (score) => {
+    try {
+      await axios.post("/api/score", { score });
+    } catch (error) {
+      console.error("Error sending score:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (timeOut) {
+      sendScoreToServer(earned);
+    }
+  }, [timeOut, earned]);
 
   const generateRandomQuestion = () => {
     const operators = ["+", "-", "x", "÷"];
@@ -146,64 +161,61 @@ const WhoWants = () => {
   useEffect(() => {
     if (questionNumber > 1 && questionNumber <= 20) {
       setEarned(moneyPyramid.find((m) => m.id === questionNumber - 1).amount);
-    } else if (questionNumber > 20) {
+    } else if (questionNumber === 20) {
       setEarned("20 points");
     }
   }, [questionNumber, moneyPyramid]);
 
   return (
     <div className="app">
-      {!username ? (
-        <Start setUsername={setUsername} />
-      ) : (
-        <>
-          <div className="main">
-            <div className="pt-5 pl-5 text-3xl cursor-pointer">
-              <Link href="/games">
-                <FaHome />
-              </Link>
-            </div>
-            {timeOut ? (
-              <h1 className="endText">You earned: {earned}</h1>
-            ) : (
-              <>
-                <div className="top">
-                  <div className="timer">
-                    <Timer
-                      setTimeOut={setTimeOut}
-                      questionNumber={questionNumber}
-                    />
-                  </div>
-                </div>
-                <div className="bottom">
-                  <Trivia
-                    data={data}
-                    questionNumber={questionNumber}
-                    setQuestionNumber={setQuestionNumber}
+      <>
+        <div className="main">
+          <div className="pt-5 pl-5 text-5xl cursor-pointer">
+            <Link href="/games">
+              <TiArrowBackOutline />
+            </Link>
+          </div>
+          {timeOut ? (
+            <h1 className="endText">You earned: {earned}</h1>
+          ) : (
+            <>
+              <div className="top">
+                <div className="timer">
+                  <Timer
                     setTimeOut={setTimeOut}
+                    questionNumber={questionNumber}
                   />
                 </div>
-              </>
-            )}
-          </div>
-          <div className="pyramid">
-            <ul className="moneyList">
-              {moneyPyramid.map((m) => (
-                <li
-                  className={
-                    questionNumber === m.id
-                      ? "moneyListItem active"
-                      : "moneyListItem"
-                  }
-                >
-                  <span className="moneyListItemNumber">{m.id}</span>
-                  <span className="moneyListItemAmount">{m.amount}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </>
-      )}
+              </div>
+              <div className="bottom">
+                <Trivia
+                  data={data}
+                  questionNumber={questionNumber}
+                  setQuestionNumber={setQuestionNumber}
+                  setTimeOut={setTimeOut}
+                />
+              </div>
+            </>
+          )}
+        </div>
+        <div className="pyramid">
+          <ul className="moneyList">
+            {moneyPyramid.map((m) => (
+              <li
+                key={m.id}
+                className={
+                  questionNumber === m.id
+                    ? "moneyListItem active"
+                    : "moneyListItem"
+                }
+              >
+                <span className="moneyListItemNumber">{m.id}</span>
+                <span className="moneyListItemAmount">{m.amount}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </>
     </div>
   );
 };

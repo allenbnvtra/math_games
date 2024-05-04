@@ -8,16 +8,8 @@ const AboutUsPage = () => {
       <h1 className="text-center text-5xl font-bold text-slate-700 mb-10">
         About us
       </h1>
-      <div className="flex gap-12">
-        <div
-          className="flex justify-center rounded-full shadow-2xl border w-[120rem] overflow-hidden"
-          style={{
-            backgroundColor: "#ffd045",
-            boxShadow:
-              "rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset",
-            backgroundImage: "linear-gradient(315deg, #ff9945 0%, #dd7835 64%)",
-          }}
-        >
+      <div className="flex">
+        <div className="justify-center items-center w-[120rem] overflow-hidden hidden lg:block">
           <Image src={Picture} alt="" height={90} width={390} />
         </div>
         <h1 className="px-5 text-slate-900 text-sm font-light">

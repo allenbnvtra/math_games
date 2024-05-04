@@ -1,8 +1,52 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { IoIosClose } from "react-icons/io";
 
+import { signIn } from "next-auth/react";
+
 const LoginModal = ({ isLoginOpen, onClose }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      setIsLoading(true);
+      const res = await signIn("credentials", {
+        username: formData.username,
+        password: formData.password,
+        redirect: false,
+      });
+
+      if (!res.ok) {
+        setIsLoading(false);
+        setError("Wrong Credentials!");
+      } else {
+        setIsLoading(false);
+        onClose();
+      }
+    } catch (error) {
+      console.log(error);
+      setError("Error: Wrong Credentialss!");
+    }
+  };
+
   return (
     <div
       className={`${
@@ -23,13 +67,16 @@ const LoginModal = ({ isLoginOpen, onClose }) => {
           Login
         </h1>
 
-        <form className="flex flex-col gap-4">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div className="flex flex-col gap-3">
             <div className="flex flex-col gap-1">
               <label className="text-sm text-slate-600" htmlFor="username">
                 Username <span className="text-red-600">*</span>
               </label>
               <input
+                onChange={handleChange}
+                value={formData.username}
+                name="username"
                 className="border border-slate-300 rounded-md text-sm px-2 py-1 focus:border-orange-600 focus:outline-none"
                 type="text"
                 id="username"
@@ -40,16 +87,20 @@ const LoginModal = ({ isLoginOpen, onClose }) => {
                 Password <span className="text-red-600">*</span>
               </label>
               <input
+                onChange={handleChange}
+                value={formData.password}
+                name="password"
                 className="border border-slate-300 rounded-md text-sm px-2 py-1 focus:border-orange-600 focus:outline-none"
                 type="text"
                 id="password"
               />
             </div>
           </div>
+          <p className="text-red-600 text-sm">{error}</p>
 
           <div className="flex justify-center">
             <button className="w-full bg-orange-600 hover:bg-orange-500 text-white font-semibold py-2 rounded-md">
-              Submit
+              {isLoading ? "Logging in..." : "Submit"}
             </button>
           </div>
         </form>

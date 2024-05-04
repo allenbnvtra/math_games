@@ -2,8 +2,47 @@
 
 import React, { useState } from "react";
 import { IoIosClose } from "react-icons/io";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const SignUpModal = ({ isSignupOpen, onClose }) => {
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    name: "",
+    username: "",
+    studentLRN: "",
+    schoolName: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("/api/auth/register", {
+        name: formData.name,
+        username: formData.username,
+        studentLRN: formData.studentLRN,
+        schoolName: formData.schoolName,
+        password: formData.password,
+        confirmPassword: formData.confirmPassword,
+      });
+      console.log(response.data);
+      router.push("/");
+      onClose();
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
+
   return (
     <div
       className={`${
@@ -24,13 +63,16 @@ const SignUpModal = ({ isSignupOpen, onClose }) => {
           Register a new account
         </h1>
 
-        <form className="flex flex-col gap-4">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div className="flex gap-3">
             <div className="flex flex-col gap-1">
               <label className="text-sm text-slate-600" htmlFor="name">
                 Name <span className="text-red-600">*</span>
               </label>
               <input
+                onChange={handleChange}
+                value={formData.name}
+                name="name"
                 className="border border-slate-300 rounded-md text-sm px-2 py-1 focus:border-orange-600 focus:outline-none"
                 type="text"
                 id="name"
@@ -41,6 +83,9 @@ const SignUpModal = ({ isSignupOpen, onClose }) => {
                 Username <span className="text-red-600">*</span>
               </label>
               <input
+                onChange={handleChange}
+                value={formData.username}
+                name="username"
                 className="border border-slate-300 rounded-md text-sm px-2 py-1 focus:border-orange-600 focus:outline-none"
                 type="text"
                 id="username"
@@ -50,23 +95,29 @@ const SignUpModal = ({ isSignupOpen, onClose }) => {
 
           <div className="flex gap-3">
             <div className="flex flex-col gap-1">
-              <label className="text-sm text-slate-600" htmlFor="student_id">
-                Student ID <span className="text-red-600">*</span>
+              <label className="text-sm text-slate-600" htmlFor="studentLRN">
+                Student LRN <span className="text-red-600">*</span>
               </label>
               <input
+                onChange={handleChange}
+                value={formData.studentLRN}
+                name="studentLRN"
                 className="border border-slate-300 rounded-md text-sm px-2 py-1 focus:border-orange-600 focus:outline-none"
                 type="text"
-                id="student_id"
+                id="studentLRN"
               />
             </div>
             <div className="flex flex-col gap-1">
-              <label className="text-sm text-slate-600" htmlFor="student_name">
+              <label className="text-sm text-slate-600" htmlFor="schoolName">
                 School Name <span className="text-red-600">*</span>
               </label>
               <input
+                onChange={handleChange}
+                value={formData.schoolName}
+                name="schoolName"
                 className="border border-slate-300 rounded-md text-sm px-2 py-1 focus:border-orange-600 focus:outline-none"
                 type="text"
-                id="student_name"
+                id="schoolName"
               />
             </div>
           </div>
@@ -77,6 +128,9 @@ const SignUpModal = ({ isSignupOpen, onClose }) => {
                 Password <span className="text-red-600">*</span>
               </label>
               <input
+                onChange={handleChange}
+                value={formData.password}
+                name="password"
                 className="border border-slate-300 rounded-md text-sm px-2 py-1 focus:border-orange-600 focus:outline-none"
                 type="text"
                 id="password"
@@ -85,20 +139,23 @@ const SignUpModal = ({ isSignupOpen, onClose }) => {
             <div className="flex flex-col gap-1">
               <label
                 className="text-sm text-slate-600"
-                htmlFor="confirm_password"
+                htmlFor="confirmPassword"
               >
                 Confirm Password <span className="text-red-600">*</span>
               </label>
               <input
+                onChange={handleChange}
+                value={formData.confirmPassword}
+                name="confirmPassword"
                 className="border border-slate-300 rounded-md text-sm px-2 py-1 focus:border-orange-600 focus:outline-none"
                 type="text"
-                id="confirm_password"
+                id="confirmPassword"
               />
             </div>
           </div>
 
           <div className="flex gap-2">
-            <input id="agree" type="checkbox" />
+            <input onChange={handleChange} id="agree" type="checkbox" />
             <label htmlFor="agree" className="text-sm text-slate-600">
               Do you agree on our{" "}
               <span className="text-blue-600 cursor-pointer">
