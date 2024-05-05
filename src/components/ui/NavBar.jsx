@@ -30,12 +30,12 @@ const NavBar = () => {
     setIsMobileMenuOpen(false);
   };
 
-  handleLogin = () => {
+  const handleLogin = () => {
     setIsLoginOpen(true);
     setIsMobileMenuOpen(false);
   };
 
-  handleSignup = () => {
+  const handleSignup = () => {
     setIsSignupOpen(true);
     setIsMobileMenuOpen(false);
   };
