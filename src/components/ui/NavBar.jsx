@@ -30,6 +30,16 @@ const NavBar = () => {
     setIsMobileMenuOpen(false);
   };
 
+  handleLogin = () => {
+    setIsLoginOpen(true);
+    setIsMobileMenuOpen(false);
+  };
+
+  handleSignup = () => {
+    setIsSignupOpen(true);
+    setIsMobileMenuOpen(false);
+  };
+
   if (!isGamePage)
     return (
       <header className="relative flex justify-between items-center py-4 lg:px-[7rem] md:px-[3rem] sm:px-[2rem] px-[1.2rem]">
@@ -117,7 +127,7 @@ const NavBar = () => {
               ) : (
                 <li>
                   <button
-                    onClick={() => setIsSignupOpen(true)}
+                    onClick={handleSignup}
                     className="hover:text-orange-600"
                   >
                     Sign up
@@ -127,7 +137,7 @@ const NavBar = () => {
               {!mySession && (
                 <li>
                   <button
-                    onClick={() => setIsLoginOpen(true)}
+                    onClick={handleLogin}
                     className="hover:text-orange-600"
                   >
                     Login
