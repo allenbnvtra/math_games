@@ -35,6 +35,7 @@ body,
   .main {
     gap: 0;
     width: 75%;
+    background-image: url("../assets/bg-portrait.jpg");
   }
 }
 
