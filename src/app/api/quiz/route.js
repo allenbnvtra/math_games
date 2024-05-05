@@ -60,14 +60,3 @@ export async function GET(req, { params }) {
     );
   }
 }
-
-export async function DELETE(req, { params }) {
-  try {
-    await dbConnect();
-    const result = await Quiz.findByIdAndDelete(params.quizId);
-    console.log("Deleted quiz:", result);
-  } catch (error) {
-    console.error("Error deleting quiz:", error);
-    throw error;
-  }
-}

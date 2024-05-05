@@ -55,7 +55,7 @@ const QuizPage = () => {
   };
 
   return (
-    <div className="px-28 h-screen">
+    <div className="px-5 md:px-28 h-screen">
       <h1 className="text-3xl font-bold mb-5">Quiz</h1>
       {status === "authenticated" && session?.user?.role === "teacher" && (
         <div className="flex">
@@ -75,8 +75,7 @@ const QuizPage = () => {
       {status === "authenticated" ? (
         <div className="flex flex-wrap mt-7">
           {data.map((quiz) => (
-            <Link
-              href={`/quiz/${quiz._id}`}
+            <div
               key={quiz._id}
               className="flex items-center gap-10 border mr-3 mb-5 px-5 py-3 cursor-pointer"
               style={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
@@ -86,15 +85,20 @@ const QuizPage = () => {
                 checked={selectedItems.includes(quiz._id)}
                 onChange={() => handleCheckboxChange(quiz._id)}
               />
-              <div className="flex flex-col gap-1">
-                <p className="font-semibold text-xl">{quiz.title}</p>
-                <p>Number of Items: {quiz.numberOfItems}</p>
-                {/* <p>Score: {quiz.score}</p> */}
-              </div>
-              <div className="text-4xl">
-                <MdOutlineKeyboardArrowRight />
-              </div>
-            </Link>
+              <Link
+                className="flex gap-3 items-center"
+                href={`/quiz/${quiz._id}`}
+              >
+                <div className="flex flex-col gap-1">
+                  <p className="font-semibold text-xl">{quiz.title}</p>
+                  <p>Number of Items: {quiz.numberOfItems}</p>
+                  {/* <p>Score: {quiz.score}</p> */}
+                </div>
+                <div className="text-4xl">
+                  <MdOutlineKeyboardArrowRight />
+                </div>
+              </Link>
+            </div>
           ))}
         </div>
       ) : (

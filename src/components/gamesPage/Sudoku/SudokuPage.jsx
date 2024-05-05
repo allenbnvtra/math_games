@@ -23,6 +23,7 @@ import {
 } from "@/utility/index.js";
 import getHint from "@/utility/getHint";
 import Link from "next/link";
+import axios from "axios";
 
 const easyMaxEmptyCells = 30;
 const mediumMaxEmptyCells = 40;

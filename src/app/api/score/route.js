@@ -20,7 +20,17 @@ export async function POST(req) {
     const body = await req.json();
     const { score } = body;
 
-    const user = await User.findById({ _id: session.user.id });
+    const user = await User.findOne({ username: session.user.username });
+
+    if (!user) {
+      return NextResponse.json(
+        {
+          status: "fail",
+          message: "User not found",
+        },
+        { status: 404 }
+      );
+    }
 
     const updatedScore = parseInt(score) + user.totalPoints;
 
@@ -36,7 +46,7 @@ export async function POST(req) {
 
     const updateUser = await User.findOneAndUpdate(
       {
-        _id: session.user.id,
+        username: session.user.username,
       },
       { totalPoints: updatedScore },
       { new: true }

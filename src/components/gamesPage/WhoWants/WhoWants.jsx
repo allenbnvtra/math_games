@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import Start from "./Start";
+// import Start from "./Start";
 import Trivia from "./Trivia";
 import Timer from "./Timer";
 import Link from "next/link";
 import { TiArrowBackOutline } from "react-icons/ti";
 import axios from "axios";
+import BG from "@/assets/bg.jpg";
 
 const WhoWants = () => {
   const [username, setUsername] = useState(null);
@@ -23,8 +24,9 @@ const WhoWants = () => {
   };
 
   useEffect(() => {
+    console.log(timeOut);
     if (timeOut) {
-      sendScoreToServer(earned);
+      sendScoreToServer(parseInt(earned));
     }
   }, [timeOut, earned]);
 
@@ -167,7 +169,7 @@ const WhoWants = () => {
   }, [questionNumber, moneyPyramid]);
 
   return (
-    <div className="app">
+    <div className="h-screen flex flex-col md:flex-row text-white bg-[#020230]">
       <>
         <div className="main">
           <div className="pt-5 pl-5 text-5xl cursor-pointer">
@@ -198,22 +200,24 @@ const WhoWants = () => {
             </>
           )}
         </div>
-        <div className="pyramid">
-          <ul className="moneyList">
-            {moneyPyramid.map((m) => (
-              <li
-                key={m.id}
-                className={
-                  questionNumber === m.id
-                    ? "moneyListItem active"
-                    : "moneyListItem"
-                }
-              >
-                <span className="moneyListItemNumber">{m.id}</span>
-                <span className="moneyListItemAmount">{m.amount}</span>
-              </li>
-            ))}
-          </ul>
+        <div className="hidden md:block w-[25%]">
+          <div className="bg-[#020230] flex items-center justify-center">
+            <ul className="moneyList">
+              {moneyPyramid.map((m) => (
+                <li
+                  key={m.id}
+                  className={
+                    questionNumber === m.id
+                      ? "moneyListItem active"
+                      : "moneyListItem"
+                  }
+                >
+                  <span className="moneyListItemNumber">{m.id}</span>
+                  <span className="moneyListItemAmount">{m.amount}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </>
     </div>

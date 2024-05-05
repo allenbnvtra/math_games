@@ -159,7 +159,7 @@ const ShapeGame = () => {
         </div>
       )}
       {gameStarted && !gameOver && (
-        <div className="px-20 py-14">
+        <div className="px-3 md:px-20 py-14">
           <div className="flex flex-col bg-white border-4 border-orange-400 rounded-md px-8 py-8">
             <div className="flex justify-between text-white font-bold text-lg mb-10">
               <div className="flex flex-col px-6 py-2 rounded-md bg-orange-500">
@@ -173,11 +173,11 @@ const ShapeGame = () => {
                 </Link>
               </div>
             </div>
-            <div className="flex justify-center items-center gap-[9rem]">
-              <div className="flex gap-2 text-[10rem] font-bold justify-center">
+            <div className="flex flex-col lg:flex-row justify-center items-center gap-4 md:gap-[9rem]">
+              <div className="flex gap-2 font-bold justify-center">
                 <Image src={questionShape.image} height={400} alt="" />
               </div>
-              <div className="flex flex-col gap-5 text-[6rem]">
+              <div className="flex flex-col gap-5 text-[3rem] md:text-[6rem]">
                 {choices.map((choice, index) => (
                   <div
                     key={index}

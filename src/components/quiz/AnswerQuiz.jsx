@@ -77,8 +77,7 @@ const AnswerQuiz = ({ quizId }) => {
               />
               {feedback.length > 0 && (
                 <p className="text-gray-500">
-                  {submitted ? "Correct Answer: " : " "}
-                  {question.answer}
+                  {submitted ? (question.isCorrect ? "Correct" : "Wrong") : ""}
                 </p>
               )}
             </div>

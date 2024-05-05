@@ -71,10 +71,12 @@ export const options = {
     async session({ session, token, user }) {
       if (session.user) {
         session.accessToken = token.accessToken;
-        session.user.id = token.sub;
+        session.user.id = token.id;
+        session.user.username = token.username;
         session.user.role = token.role;
         session.user.password = undefined;
       }
+
       return session;
     },
   },

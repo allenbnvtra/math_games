@@ -4,7 +4,7 @@ import Picture from "@/assets/file.png";
 
 const AboutUsPage = () => {
   return (
-    <div className="px-20 pb-20 pt-4">
+    <div className="px-5 md:px-20 pb-20 pt-4">
       <h1 className="text-center text-5xl font-bold text-slate-700 mb-10">
         About us
       </h1>
