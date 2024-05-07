@@ -35,7 +35,7 @@ export async function PATCH(req, { params }) {
 
     const { quizId } = params;
     const body = await req.json();
-    const { answers, question } = body;
+    const { answers, question, correctAnswer } = body;
 
     const updatedAnswers = Array.isArray(answers) ? answers : [answers];
 
@@ -43,7 +43,7 @@ export async function PATCH(req, { params }) {
 
     const updatedItem = await quizItem.findByIdAndUpdate(
       quizId,
-      { answers: updatedAnswers, question },
+      { answers: updatedAnswers, question, correctAnswer },
       { new: true }
     );
 

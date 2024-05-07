@@ -95,11 +95,14 @@ const QuizPage = () => {
                 className="flex items-center gap-10 border mr-3 mb-5 px-5 py-3 cursor-pointer"
                 style={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
               >
-                <input
-                  type="checkbox"
-                  checked={selectedItems.includes(quiz._id)}
-                  onChange={() => handleCheckboxChange(quiz._id)}
-                />
+                {status === "authenticated" &&
+                  session?.user?.role === "teacher" && (
+                    <input
+                      type="checkbox"
+                      checked={selectedItems.includes(quiz._id)}
+                      onChange={() => handleCheckboxChange(quiz._id)}
+                    />
+                  )}
                 <Link
                   className="flex gap-3 items-center"
                   href={`/quiz/${quiz._id}`}

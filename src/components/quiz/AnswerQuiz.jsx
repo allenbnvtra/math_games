@@ -18,6 +18,7 @@ const AnswerQuiz = ({ quizId }) => {
   const [selectedQuestionId, setSelectedQuestionId] = useState(null);
   const [selectedQuestion, setSelectedQuestion] = useState(null);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [selectedCorrect, setSelectedCorrect] = useState(null);
   const [questionType, setQuestionType] = useState(null);
 
   const { data: session, status } = useSession();
@@ -55,12 +56,25 @@ const AnswerQuiz = ({ quizId }) => {
     setSubmitted(true);
   };
 
-  const handleEditClick = (questionId, question, answer, type) => {
+  const handleEditClick = (questionId, question, answer, correct, type) => {
     setSelectedQuestionId(questionId);
     setSelectedQuestion(question);
     setSelectedAnswer(answer);
+    setSelectedCorrect(correct);
     setQuestionType(type);
     setIsEditOpen(true);
+  };
+
+  const refreshData = async () => {
+    try {
+      const res = await axios.get(`/api/questions/${quizId}`);
+      setData(res.data.data);
+      setUserAnswers(() => {
+        return res.data.data.map(() => "");
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -71,7 +85,9 @@ const AnswerQuiz = ({ quizId }) => {
         selectAns={selectedAnswer}
         isEditOpen={isEditOpen}
         quizType={questionType}
+        selectCorrect={selectedCorrect}
         onClose={() => setIsEditOpen(false)}
+        refreshData={refreshData} // Pass the refreshData function to EditQuizModal
       />
       <div className="flex text-4xl py-7 font-extralight">
         <Link className="cursor-pointer" href="/quiz">
@@ -104,6 +120,7 @@ const AnswerQuiz = ({ quizId }) => {
                           question._id,
                           question.question,
                           question.answers,
+                          question.correctAnswer,
                           question.quizID.quizType
                         )
                       }

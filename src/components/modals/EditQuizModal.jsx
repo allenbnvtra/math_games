@@ -1,5 +1,4 @@
 "use client";
-
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { IoIosClose } from "react-icons/io";
@@ -10,14 +9,18 @@ const EditQuizModal = ({
   id,
   selectQuestion,
   selectAns,
+  selectCorrect,
+  refreshData, // Receive the refreshData callback
 }) => {
-  const [answers, setAnswers] = useState([]);
   const [question, setQuestion] = useState("");
+  const [answers, setAnswers] = useState([]);
+  const [correct, setCorrect] = useState("");
 
   useEffect(() => {
     setQuestion(selectQuestion);
     setAnswers(selectAns);
-  }, [selectQuestion, selectAns]);
+    setCorrect(selectCorrect);
+  }, [selectQuestion, selectAns, selectCorrect]);
 
   const handleUpdateQuiz = async (e) => {
     e.preventDefault();
@@ -26,8 +29,10 @@ const EditQuizModal = ({
       await axios.patch(`/api/questions/${id}`, {
         question,
         answers,
+        correctAnswer: correct,
       });
 
+      refreshData(); // Call the refreshData function after successful update
       onClose();
     } catch (error) {
       console.error("Error updating quiz:", error);
@@ -67,6 +72,20 @@ const EditQuizModal = ({
                 id="question"
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
+              />
+            </div>
+
+            <div className="flex flex-col gap-1 mb-6">
+              <label className="text-sm text-slate-600" htmlFor="correct">
+                Correct Answer
+              </label>
+              <input
+                required
+                className="border border-slate-300 rounded-md text-sm px-2 py-1 focus:border-orange-600 focus:outline-none"
+                type="text"
+                id="correct"
+                value={correct}
+                onChange={(e) => setCorrect(e.target.value)}
               />
             </div>
 
