@@ -78,7 +78,7 @@ const AnswerQuiz = ({ quizId }) => {
   };
 
   return (
-    <div className="px-[4rem]">
+    <div className="px-3 md:px-[4rem]">
       <EditQuizModal
         id={selectedQuestionId}
         selectQuestion={selectedQuestion}
@@ -102,7 +102,7 @@ const AnswerQuiz = ({ quizId }) => {
           {data.map((question, index) => (
             <div
               key={index}
-              className="w-[50rem] border px-5 py-6 mb-4"
+              className="w-full md:w-[45rem] border px-5 py-6 mb-4"
               style={{
                 boxShadow:
                   "rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px",
