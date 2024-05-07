@@ -13,7 +13,7 @@ const SignUpModal = ({ isSignupOpen, onClose }) => {
     studentLRN: "",
     schoolName: "",
     password: "",
-    confirmPassword: "",
+    gradeSec: "",
   });
 
   const handleChange = (e) => {
@@ -33,7 +33,7 @@ const SignUpModal = ({ isSignupOpen, onClose }) => {
         studentLRN: formData.studentLRN,
         schoolName: formData.schoolName,
         password: formData.password,
-        confirmPassword: formData.confirmPassword,
+        gradeSection: formData.gradeSec,
       });
       console.log(response.data);
       router.push("/");
@@ -137,32 +137,18 @@ const SignUpModal = ({ isSignupOpen, onClose }) => {
               />
             </div>
             <div className="flex flex-col gap-1">
-              <label
-                className="text-sm text-slate-600"
-                htmlFor="confirmPassword"
-              >
-                Confirm Password <span className="text-red-600">*</span>
+              <label className="text-sm text-slate-600" htmlFor="gradeSec">
+                Grade and section <span className="text-red-600">*</span>
               </label>
               <input
                 onChange={handleChange}
-                value={formData.confirmPassword}
-                name="confirmPassword"
+                value={formData.gradeSec}
+                name="gradeSec"
                 className="border border-slate-300 rounded-md text-sm px-2 py-1 focus:border-orange-600 focus:outline-none"
                 type="text"
-                id="confirmPassword"
+                id="gradeSec"
               />
             </div>
-          </div>
-
-          <div className="flex gap-2">
-            <input onChange={handleChange} id="agree" type="checkbox" />
-            <label htmlFor="agree" className="text-sm text-slate-600">
-              Do you agree on our{" "}
-              <span className="text-blue-600 cursor-pointer">
-                terms and conditions
-              </span>
-              ?
-            </label>
           </div>
 
           <div className="flex justify-center">

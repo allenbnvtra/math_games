@@ -6,30 +6,31 @@ const quizItemSchema = new mongoose.Schema({
     ref: "Quiz",
     // required: [true, "quiz id is needed"],
   },
-  questionNumber: Number,
   question: {
     type: String,
     required: [true, "Question is required"],
   },
-  answer: {
+  answers: [
+    {
+      type: String,
+      required: [true, "Choice is required"],
+    },
+  ],
+  correctAnswer: {
     type: String,
-    required: [true, "Answer is required"],
-  },
-  isAnswerCorrect: {
-    type: Boolean,
-    default: false,
+    required: [true, "Correct Answer is required"],
   },
 });
 
 quizItemSchema.pre(/^find/, function (next) {
   this.populate({
     path: "quizID",
-    select: "title",
+    select: "title quizType",
   });
   next();
 });
 
-const quizItem =
+const QuizItem =
   mongoose.models.QuizItem || mongoose.model("QuizItem", quizItemSchema);
 
-export default quizItem;
+export default QuizItem;

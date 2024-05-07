@@ -1,4 +1,4 @@
-import ShapeGame from "@/components/gamesPage/Shape/ShapeGame";
+import ShapeGame from "../../../components/gamesPage/Shape/ShapeGame";
 import React from "react";
 
 const page = () => {

@@ -3,9 +3,9 @@
 import React, { useEffect, useRef } from "react";
 
 import lottie from "lottie-web";
-import easyDifficultyAnimationData from "@/assets/animations/DifficultyAnimations/EasyDifficultyAnimation/EasyDifficultyAnimation.json";
-import mediumDifficultyAnimationData from "@/assets/animations/DifficultyAnimations/MediumDifficultyAnimation/MediumDifficultyAnimation.json";
-import hardDifficultyAnimationData from "@/assets/animations/DifficultyAnimations/HardDifficultyAnimation/HardDifficultyAnimation.json";
+import easyDifficultyAnimationData from "../../../assets/animations/DifficultyAnimations/EasyDifficultyAnimation/EasyDifficultyAnimation.json";
+import mediumDifficultyAnimationData from "../../../assets/animations/DifficultyAnimations/MediumDifficultyAnimation/MediumDifficultyAnimation.json";
+import hardDifficultyAnimationData from "../../../assets/animations/DifficultyAnimations/HardDifficultyAnimation/HardDifficultyAnimation.json";
 
 import "./DifficultySelectionModal.css";
 

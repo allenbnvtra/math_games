@@ -1,5 +1,5 @@
 "use client";
-import Identification from "@/components/quiz/Identification";
+import Identification from "../../../../components/quiz/Identification";
 import { useSearchParams } from "next/navigation";
 import React from "react";
 

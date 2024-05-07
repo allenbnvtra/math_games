@@ -12,7 +12,7 @@ import {
   NoSolutionFoundModal,
   GameDetails,
   DifficultySelectionModal,
-} from "@/components/sudokuComponents/index.js";
+} from "../../../components/sudokuComponents/index.js";
 import {
   animateElement,
   arrayDeepCopy,
@@ -20,8 +20,8 @@ import {
   checkPlayerWon,
   createSudokuGrid,
   solveSudoku,
-} from "@/utility/index.js";
-import getHint from "@/utility/getHint";
+} from "../../../utility/index.js";
+import getHint from "../../../utility/getHint";
 import Link from "next/link";
 import axios from "axios";
 

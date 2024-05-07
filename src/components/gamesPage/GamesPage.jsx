@@ -2,12 +2,10 @@
 
 import React, { useState } from "react";
 import GameCards from "./GameCards";
-import Millionaire from "@/assets/millionaire.jpeg";
-import Shapes from "@/assets/shapes.jpg";
-import Sudoku from "@/assets/sudoku.jpeg";
+import Millionaire from "../../assets/millionaire.jpeg";
+import Shapes from "../../assets/shapes.jpg";
+import Sudoku from "../../assets/sudoku.jpeg";
 import Link from "next/link";
-import { IoIosAddCircleOutline } from "react-icons/io";
-import AddQuizModal from "../modals/AddQuizModal";
 import { useSession } from "next-auth/react";
 import LoginModal from "../modals/LoginModal";
 

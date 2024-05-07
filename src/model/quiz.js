@@ -6,9 +6,10 @@ const quizSchema = new mongoose.Schema(
       type: String,
       required: [true, "A quiz should have title"],
     },
-    numberOfItems: {
-      type: Number,
-      required: [true, "A quiz should have number of items"],
+    quizType: {
+      type: String,
+      enum: ["choices", "identification"],
+      required: [true, "A quiz should have quiz type"],
     },
     submitDate: Date,
   },

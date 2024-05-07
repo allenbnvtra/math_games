@@ -1,5 +1,5 @@
-import dbConnect from "@/lib/db/db";
-import User from "@/model/user";
+import dbConnect from "../../../../lib/db/db";
+import User from "../../../../model/user";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
@@ -8,14 +8,8 @@ export async function POST(request) {
 
     const body = await request.json();
 
-    const {
-      name,
-      username,
-      studentLRN,
-      schoolName,
-      password,
-      confirmPassword,
-    } = body;
+    const { name, username, studentLRN, schoolName, password, gradeSection } =
+      body;
 
     // Check if user already exist
     const isUserExist = await User.findOne({ username });
@@ -36,7 +30,7 @@ export async function POST(request) {
       studentLRN,
       schoolName,
       password,
-      confirmPassword,
+      gradeSection,
     });
 
     newUser.password = undefined;

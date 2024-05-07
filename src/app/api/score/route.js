@@ -1,7 +1,7 @@
-import dbConnect from "@/lib/db/db";
+import dbConnect from "../../../lib/db/db";
 import { getServerSession } from "next-auth";
 import { options } from "../auth/[...nextauth]/options";
-import User from "@/model/user";
+import User from "../../../model/user";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {

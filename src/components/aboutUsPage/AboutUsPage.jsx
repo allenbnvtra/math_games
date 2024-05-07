@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import Picture from "@/assets/file.png";
+import Picture from "../../assets/file.png";
 
 const AboutUsPage = () => {
   return (

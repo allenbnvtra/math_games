@@ -7,7 +7,7 @@ import Timer from "./Timer";
 import Link from "next/link";
 import { TiArrowBackOutline } from "react-icons/ti";
 import axios from "axios";
-import BG from "@/assets/bg.jpg";
+import BG from "../../../assets/bg.jpg";
 
 const WhoWants = () => {
   const [username, setUsername] = useState(null);

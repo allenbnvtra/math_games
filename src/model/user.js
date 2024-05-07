@@ -24,9 +24,9 @@ const userSchema = new mongoose.Schema(
       required: [true, "A user need to provide password"],
       select: false,
     },
-    confirmPassword: {
+    gradeSection: {
       type: String,
-      required: [true, "A user need to confirm password"],
+      required: [true, "A user need to have grade and section"],
     },
     role: {
       type: String,

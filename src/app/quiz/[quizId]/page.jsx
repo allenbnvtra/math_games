@@ -1,6 +1,5 @@
 "use client";
-import AnswerQuiz from "@/components/quiz/AnswerQuiz";
-import { useRouter } from "next/navigation";
+import AnswerQuiz from "../../../components/quiz/AnswerQuiz";
 import React from "react";
 
 const page = ({ params }) => {

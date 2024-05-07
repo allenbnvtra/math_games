@@ -1,4 +1,4 @@
-import GamesPage from "@/components/gamesPage/GamesPage";
+import GamesPage from "../../components/gamesPage/GamesPage";
 import React from "react";
 
 const page = () => {

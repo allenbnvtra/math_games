@@ -3,7 +3,7 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
-import Logo from "@/assets/logo.png";
+import Logo from "./../../assets/logo.png";
 import Link from "next/link";
 import SignUpModal from "../modals/SignUpModal";
 import LoginModal from "../modals/LoginModal";
@@ -20,7 +20,7 @@ const NavBar = () => {
 
   const router = usePathname();
 
-  const isGamePage = router.startsWith("/game");
+  const isGamePage = router.startsWith("/game") || router.startsWith("/quiz");
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);

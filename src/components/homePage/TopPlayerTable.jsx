@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import Star from "@/assets/topLeader.webp";
+import Star from "../../assets/topLeader.webp";
 import axios from "axios";
 
 const TopPlayerTable = () => {

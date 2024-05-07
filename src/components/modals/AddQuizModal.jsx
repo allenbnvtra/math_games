@@ -8,6 +8,7 @@ import { IoIosClose } from "react-icons/io";
 const AddQuizModal = ({ isQuizOpen, onClose }) => {
   const [numberOfItems, setNumberOfItems] = useState("");
   const [title, setTitle] = useState("");
+  const [selectedType, setSelectedType] = useState("");
   const router = useRouter();
 
   const handleCreateQuiz = async (e) => {
@@ -15,14 +16,16 @@ const AddQuizModal = ({ isQuizOpen, onClose }) => {
 
     try {
       const res = await axios.post("/api/quiz", {
-        numberOfItems,
+        quizType: selectedType,
         title,
       });
 
       console.log(res.data);
 
       if (res.status === 200 || res.status === 201) {
-        router.push(`/quiz/${res.data.data._id}/create?items=${numberOfItems}`);
+        router.push(
+          `/quiz/${res.data.data._id}/create?items=${numberOfItems}&quizType=${selectedType}`
+        );
       } else {
         console.error("Unexpected response:", res);
       }
@@ -61,13 +64,12 @@ const AddQuizModal = ({ isQuizOpen, onClose }) => {
               className="border border-slate-300 rounded-md text-sm px-2 py-1 focus:border-orange-600 focus:outline-none"
               type="text"
               id="title"
-              value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
 
           <div className="flex flex-col gap-1 mb-6">
-            <label className="text-sm text-slate-600" htmlFor="items">
+            <label className="text-sm text-slate-600" htmlFor="numberOfItems">
               No. of items <span className="text-red-600">*</span>
             </label>
             <input
@@ -75,9 +77,23 @@ const AddQuizModal = ({ isQuizOpen, onClose }) => {
               className="border border-slate-300 rounded-md text-sm px-2 py-1 focus:border-orange-600 focus:outline-none"
               type="number"
               id="numberOfItems"
-              value={numberOfItems}
               onChange={(e) => setNumberOfItems(e.target.value)}
             />
+          </div>
+
+          <div className="flex flex-col gap-1 mb-6">
+            <label className="text-sm text-slate-600" htmlFor="selectedType">
+              Quiz Type <span className="text-red-600">*</span>
+            </label>
+            <select
+              className="border border-slate-300 rounded-md text-sm px-2 py-1 focus:border-orange-600 focus:outline-none"
+              id="selectedType"
+              onChange={(e) => setSelectedType(e.target.value)}
+            >
+              <option value="">Select Type</option>
+              <option value="identification">Identification</option>
+              <option value="choices">Multiple Choice</option>
+            </select>
           </div>
         </div>
 

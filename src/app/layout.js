@@ -1,8 +1,8 @@
-import { Inter, Montserrat } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import "./globals.css";
-import NavBar from "@/components/ui/NavBar";
-import Footer from "@/components/ui/Footer";
 import AuthProvider from "./AuthProvider";
+import NavBar from "./../components/ui/NavBar";
+import Footer from "./../components/ui/Footer";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 

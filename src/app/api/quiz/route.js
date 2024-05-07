@@ -1,5 +1,5 @@
-import dbConnect from "@/lib/db/db";
-import Quiz from "@/model/quiz";
+import dbConnect from "../../../lib/db/db";
+import Quiz from "../../../model/quiz";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
@@ -8,9 +8,9 @@ export async function POST(request) {
 
     const body = await request.json();
 
-    const { numberOfItems, title } = body;
+    const { quizType, title } = body;
 
-    const data = await Quiz.create({ numberOfItems, title });
+    const data = await Quiz.create({ quizType, title });
 
     return NextResponse.json(
       {

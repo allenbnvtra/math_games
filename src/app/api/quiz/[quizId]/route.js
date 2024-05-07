@@ -1,6 +1,6 @@
-import dbConnect from "@/lib/db/db";
-import Quiz from "@/model/quiz";
-import quizItem from "@/model/quizItem";
+import dbConnect from "../../../../lib/db/db";
+import Quiz from "../../../../model/quiz";
+import quizItem from "../../../../model/quizItem";
 import { NextResponse } from "next/server";
 
 export async function POST(request, { params }) {
@@ -9,20 +9,18 @@ export async function POST(request, { params }) {
 
     const body = await request.json();
     const quizItemsData = body.formData;
+    const quizId = params.quizId;
 
     const createdQuizItems = [];
 
     for (const itemData of quizItemsData) {
-      const id = params.quizId;
-      const { question, answer, questionNumber, quizID } = itemData;
-
-      if (!quizID) request.body.quizID = id;
+      const { question, answers, correctAnswer } = itemData;
 
       const createdItem = await quizItem.create({
         question,
-        answer,
-        questionNumber,
-        quizID: request.body.quizID,
+        answers,
+        correctAnswer,
+        quizID: quizId,
       });
 
       createdQuizItems.push(createdItem);
@@ -39,7 +37,7 @@ export async function POST(request, { params }) {
       }
     );
   } catch (error) {
-    console.log(error);
+    console.error(error);
 
     return NextResponse.json(
       {

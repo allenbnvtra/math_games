@@ -1,4 +1,4 @@
-import SudokuPage from "@/components/gamesPage/Sudoku/SudokuPage";
+import SudokuPage from "../../../components/gamesPage/Sudoku/SudokuPage";
 
 const page = () => {
   return <SudokuPage />;
